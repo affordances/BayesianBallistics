@@ -24,6 +24,7 @@ const App = (props) => {
           fill="yellow"
         /> */}
       </Svg>
+      blah blah
     </View>
   );
 };
