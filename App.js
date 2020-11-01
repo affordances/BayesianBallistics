@@ -1,30 +1,44 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import Svg, { Circle, Rect } from "react-native-svg";
+import Svg, { Circle, Defs, Pattern, Rect, Path } from "react-native-svg";
 
-const App = (props) => {
+const App = () => {
+  const drawTarget = () => {
+    return (
+      <Svg height="100%" width="100%" viewBox="0 0 100.25 100.25">
+        {[1, 2, 3, 4, 5].map((r) => (
+          <Circle cx="50" cy="50" r={r * 10} fill="rgb(255, 0, 0, 0.1)" />
+        ))}
+        <Defs>
+          <Pattern
+            id="grid"
+            width="10"
+            height="10"
+            patternUnits="userSpaceOnUse"
+          >
+            <Path
+              d="M 10 0 L 0 0 0 10"
+              fill="none"
+              stroke="gray"
+              stroke-width="0.5"
+            />
+          </Pattern>
+        </Defs>
+        <Rect width="100.25" height="100.25" fill="url(#grid)" />
+      </Svg>
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <Svg height="50%" width="50%" viewBox="0 0 100 100" {...props}>
-        <Circle
-          cx="50"
-          cy="50"
-          r="45"
-          stroke="blue"
-          strokeWidth="2.5"
-          fill="green"
-        />
-        {/* <Rect
-          x="15"
-          y="15"
-          width="70"
-          height="70"
-          stroke="red"
-          strokeWidth="2"
-          fill="yellow"
-        /> */}
-      </Svg>
-      blah blah
+      <div
+        style={{
+          height: "500px",
+          width: "500px",
+        }}
+      >
+        {drawTarget()}
+      </div>
     </View>
   );
 };
