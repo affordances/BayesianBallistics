@@ -1,11 +1,26 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import { Button, StyleSheet, View } from "react-native";
 import Svg, { Circle, Defs, Pattern, Rect, Path } from "react-native-svg";
 
 const App = () => {
+  const [shots, setShots] = useState([]);
+
+  console.log(shots);
+
   const drawTarget = () => {
     return (
-      <Svg height="100%" width="100%" viewBox="0 0 100 100">
+      <Svg
+        height="100%"
+        width="100%"
+        viewBox="0 0 100 100"
+        onPress={(event) => {
+          const newShot = [
+            event.nativeEvent.locationX,
+            event.nativeEvent.locationY,
+          ];
+          setShots((prevState) => [...prevState, newShot]);
+        }}
+      >
         {[1, 2, 3, 4, 5].map((r, i) => (
           <Circle
             key={i}
@@ -31,6 +46,9 @@ const App = () => {
           </Pattern>
         </Defs>
         <Rect width="100" height="100" fill="url(#grid)" />
+        {shots.map(([x, y], i) => (
+          <Circle r="4" key={i} cx={x} cy={y} fill="black" />
+        ))}
       </Svg>
     );
   };
@@ -38,6 +56,7 @@ const App = () => {
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>{drawTarget()}</View>
+      <Button title="Reset" onPress={() => setShots([])} />
     </View>
   );
 };
