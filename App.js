@@ -1,55 +1,52 @@
 import React, { useState } from "react";
-import { Button, StyleSheet, View } from "react-native";
+import { Button, Pressable, StyleSheet, View } from "react-native";
 import Svg, { Circle, Defs, Pattern, Rect, Path } from "react-native-svg";
 
 const App = () => {
   const [shots, setShots] = useState([]);
 
-  console.log(shots);
-
   const drawTarget = () => {
     return (
-      <Svg
-        height="100%"
-        width="100%"
-        viewBox="0 0 100 100"
+      <Pressable
         onPress={(event) => {
           const newShot = [
-            event.nativeEvent.locationX,
-            event.nativeEvent.locationY,
+            event.nativeEvent.locationX / 3,
+            event.nativeEvent.locationY / 3,
           ];
           setShots((prevState) => [...prevState, newShot]);
         }}
       >
-        {[1, 2, 3, 4, 5].map((r, i) => (
-          <Circle
-            key={i}
-            cx="50"
-            cy="50"
-            r={r * 10}
-            fill="rgb(255, 0, 0, 0.1)"
-          />
-        ))}
-        <Defs>
-          <Pattern
-            id="grid"
-            width="10"
-            height="10"
-            patternUnits="userSpaceOnUse"
-          >
-            <Path
-              d="M 10 0 L 0 0 0 10"
-              fill="none"
-              stroke="gray"
-              stroke-width="1"
+        <Svg height="100%" width="100%" viewBox="0 0 100 100">
+          {[1, 2, 3, 4, 5].map((r, i) => (
+            <Circle
+              key={i}
+              cx="50"
+              cy="50"
+              r={r * 10}
+              fill="rgb(255, 0, 0, 0.1)"
             />
-          </Pattern>
-        </Defs>
-        <Rect width="100" height="100" fill="url(#grid)" />
-        {shots.map(([x, y], i) => (
-          <Circle r="4" key={i} cx={x} cy={y} fill="black" />
-        ))}
-      </Svg>
+          ))}
+          <Defs>
+            <Pattern
+              id="grid"
+              width="10"
+              height="10"
+              patternUnits="userSpaceOnUse"
+            >
+              <Path
+                d="M 10 0 L 0 0 0 10"
+                fill="none"
+                stroke="gray"
+                stroke-width="1"
+              />
+            </Pattern>
+          </Defs>
+          <Rect width="100" height="100" fill="url(#grid)" />
+          {shots.map(([x, y], i) => (
+            <Circle r="4" key={i} cx={x} cy={y} fill="black" />
+          ))}
+        </Svg>
+      </Pressable>
     );
   };
 
