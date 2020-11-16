@@ -1,14 +1,32 @@
 import React, { useState } from "react";
-import { Button, Pressable, StyleSheet, View } from "react-native";
-import Svg, { Circle, Defs, Pattern, Rect, Path } from "react-native-svg";
+import {
+  Button,
+  Keyboard,
+  Pressable,
+  StyleSheet,
+  TextInput,
+  View,
+} from "react-native";
+import Svg, {
+  Circle,
+  Defs,
+  G,
+  Pattern,
+  Rect,
+  Path,
+  Text,
+  TSpan,
+} from "react-native-svg";
 
 const App = () => {
   const [shots, setShots] = useState([]);
+  const [distance, setDistance] = useState("");
 
   const drawTarget = () => {
     return (
       <Pressable
         onPress={(event) => {
+          Keyboard.dismiss();
           const newShot = [
             event.nativeEvent.locationX / 3,
             event.nativeEvent.locationY / 3,
@@ -43,7 +61,20 @@ const App = () => {
           </Defs>
           <Rect width="100" height="100" fill="url(#grid)" />
           {shots.map(([x, y], i) => (
-            <Circle r="4" key={i} cx={x} cy={y} fill="black" />
+            <G key={i} x={x} y={y}>
+              <Circle cx="0" cy="0" r="4" fill="black" />
+              <Text
+                x="0"
+                y="0"
+                alignmentBaseline="middle"
+                textAnchor="middle"
+                fill="white"
+                fontSize="4"
+                fontWeight={300}
+              >
+                {i + 1}
+              </Text>
+            </G>
           ))}
         </Svg>
       </Pressable>
@@ -52,6 +83,12 @@ const App = () => {
 
   return (
     <View style={styles.container}>
+      <TextInput
+        keyboardType="numeric"
+        style={{ height: 40, width: 200, borderColor: "gray", borderWidth: 1 }}
+        onChangeText={(text) => setDistance(text)}
+        value={distance}
+      />
       <View style={styles.innerContainer}>{drawTarget()}</View>
       <Button title="Reset" onPress={() => setShots([])} />
     </View>
