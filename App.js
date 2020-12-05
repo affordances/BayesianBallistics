@@ -72,7 +72,7 @@ const App = () => {
                 fontSize="4"
                 fontWeight={300}
               >
-                {i + 1}
+                {i + 1} poop
               </Text>
             </G>
           ))}
