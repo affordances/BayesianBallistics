@@ -45,22 +45,13 @@ const App = () => {
   const transX = cond(
     eq(gestureState, State.ACTIVE),
     add(offsetX, dragX),
-    set(offsetX, add(offsetX, dragX)),
+    set(offsetX, add(offsetX, dragX))
   );
   const transY = cond(
     eq(gestureState, State.ACTIVE),
     add(offsetY, dragY),
-    set(offsetY, add(offsetY, dragY)),
+    set(offsetY, add(offsetY, dragY))
   );
-  const borderWidth = interpolate(transX, {
-    inputRange: [0, width],
-    outputRange: [0, 5],
-    extrapolate: Extrapolate.CLAMP
-  });
-  const opacity = interpolate(transY, {
-    inputRange: [0, height],
-    outputRange: [0.1, 1],
-  });
 
   const drawTarget = () => {
     return (
@@ -124,61 +115,59 @@ const App = () => {
   return (
     <View style={styles.container}>
       <PanGestureHandler
-          maxPointers={1}
-          onGestureEvent={onGestureEvent}
-          onHandlerStateChange={onGestureEvent}
-        >
-          <Animated.View
-            style={[
-              styles.box,
-              {
-                opacity: opacity,
-                borderWidth: borderWidth,
-                transform: [
-                  {
-                    translateX: transX,
-                  },
-                  {
-                    translateY: transY,
-                  },
-                ],
-              },
-            ]}
-          />
-        </PanGestureHandler>
+        style={{ zIndex: 2 }}
+        maxPointers={1}
+        onGestureEvent={onGestureEvent}
+        onHandlerStateChange={onGestureEvent}
+      >
+        <Animated.View
+          style={[
+            styles.box,
+            {
+              transform: [
+                {
+                  translateX: transX,
+                },
+                {
+                  translateY: transY,
+                },
+              ],
+            },
+          ]}
+        />
+      </PanGestureHandler>
       {/* <TextInput
         keyboardType="numeric"
         style={{ height: 40, width: 200, borderColor: "gray", borderWidth: 1 }}
         onChangeText={(text) => setDistance(text)}
         value={distance}
-      />
+      /> */}
       <View style={styles.innerContainer}>{drawTarget()}</View>
-      <Button title="Reset" onPress={() => setShots([])} /> */}
+      <Button title="Reset" onPress={() => setShots([])} />
     </View>
   );
 };
 
-const CIRCLE_SIZE = 70;
+const CIRCLE_SIZE = 20;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#fff",
-    // alignItems: "center",
-    // justifyContent: "center",
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
   innerContainer: {
     height: 301.5,
     width: 301.5,
   },
   box: {
-    backgroundColor: "tomato",
+    backgroundColor: "black",
     marginLeft: -(CIRCLE_SIZE / 2),
     marginTop: -(CIRCLE_SIZE / 2),
     width: CIRCLE_SIZE,
     height: CIRCLE_SIZE,
     borderRadius: CIRCLE_SIZE / 2,
-    borderColor: "#000"
   },
 });
 
