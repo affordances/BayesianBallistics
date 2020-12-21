@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Draggable } from "./Draggable";
 import { Target } from "./Target";
-import { ReanimatedDraggable } from "./ReanimateDraggable";
+import { ReanimatedDraggable } from "./ReanimatedDraggable";
 
 const App = () => {
   return (
