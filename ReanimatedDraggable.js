@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
+import { CIRCLE_SIZE } from "./constants";
 
 const { cond, eq, add, set, Value, event } = Animated;
 
@@ -32,9 +33,8 @@ export const ReanimatedDraggable = () => {
   );
 
   return (
-    <View>
+    <View style={{ zIndex: 2 }}>
       <PanGestureHandler
-        style={{ zIndex: 2 }}
         maxPointers={1}
         onGestureEvent={onGestureEvent}
         onHandlerStateChange={onGestureEvent}
@@ -58,8 +58,6 @@ export const ReanimatedDraggable = () => {
     </View>
   );
 };
-
-const CIRCLE_SIZE = 20;
 
 const styles = StyleSheet.create({
   shot: {

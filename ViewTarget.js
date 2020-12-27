@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 
 const BASE_RING_SIZE = 350;
 
-export const Target = () => {
+export const ViewTarget = () => {
   return (
     <View
       style={{
