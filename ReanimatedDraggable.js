@@ -33,7 +33,7 @@ export const ReanimatedDraggable = () => {
   );
 
   return (
-    <View style={{ zIndex: 2 }}>
+    <View style={styles.container}>
       <PanGestureHandler
         maxPointers={1}
         onGestureEvent={onGestureEvent}
@@ -41,7 +41,7 @@ export const ReanimatedDraggable = () => {
       >
         <Animated.View
           style={[
-            styles.shot,
+            styles.dot,
             {
               transform: [
                 {
@@ -60,10 +60,11 @@ export const ReanimatedDraggable = () => {
 };
 
 const styles = StyleSheet.create({
-  shot: {
+  container: {
+    zIndex: 2,
+  },
+  dot: {
     backgroundColor: "black",
-    marginLeft: -(CIRCLE_SIZE / 2),
-    marginTop: -(CIRCLE_SIZE / 2),
     width: CIRCLE_SIZE,
     height: CIRCLE_SIZE,
     borderRadius: CIRCLE_SIZE / 2,

@@ -1,46 +1,42 @@
-import React, { useRef } from "react";
-import { StyleSheet, View, PanResponder, Animated } from "react-native";
+import React from "react";
+import { StyleSheet, PanResponder, Animated, View } from "react-native";
 import { CIRCLE_SIZE } from "./constants";
 
 export const Draggable = () => {
-  const pan = useRef(new Animated.ValueXY()).current;
+  const pan = new Animated.ValueXY();
 
-  const panResponder = React.useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onPanResponderGrant: () => {
-        pan.setOffset({
-          x: pan.x,
-          y: pan.y,
-        });
-        pan.setValue({ x: 0, y: 0 });
-      },
-      onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], {
-        useNativeDriver: false,
-      }),
-      onPanResponderRelease: () => {
-        return;
-      },
-    })
-  ).current;
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+    onPanResponderGrant: () => {
+      pan.setOffset({
+        x: pan.x._value,
+        y: pan.y._value,
+      });
+      pan.setValue({ x: 0, y: 0 });
+    },
+    onPanResponderMove: (_, gesture) =>
+      pan.setValue({ x: gesture.dx, y: gesture.dy }),
+    onPanResponderRelease: () => {
+      pan.flattenOffset();
+    },
+  });
 
-  const renderDraggable = () => {
-    const panStyle = {
-      transform: pan.getTranslateTransform(),
-    };
-    return (
+  return (
+    <View style={styles.container}>
       <Animated.View
         {...panResponder.panHandlers}
-        style={[panStyle, styles.circle]}
+        style={[pan.getLayout(), styles.dot]}
       />
-    );
-  };
-
-  return <View>{renderDraggable()}</View>;
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-  circle: {
+  container: {
+    zIndex: 2,
+    position: "absolute",
+  },
+  dot: {
     backgroundColor: "green",
     width: CIRCLE_SIZE,
     height: CIRCLE_SIZE,

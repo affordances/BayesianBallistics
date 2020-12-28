@@ -2,15 +2,17 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Draggable } from "./Draggable";
 import { ViewTarget } from "./ViewTarget";
-import { SvgTarget } from "./SvgTarget";
+import { SvgGrid } from "./SvgGrid";
 import { ReanimatedDraggable } from "./ReanimatedDraggable";
+import { SvgTarget } from "./SvgTarget";
 
 const App = () => {
   return (
     <View style={styles.container}>
+      <SvgGrid />
+      <SvgTarget />
       {/* <ViewTarget /> */}
-      {/* <SvgTarget /> */}
-      <ReanimatedDraggable />
+      {/* <ReanimatedDraggable /> */}
       <Draggable />
     </View>
   );
@@ -19,10 +21,8 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
-    // zIndex: 0,
   },
 });
 
