@@ -2,17 +2,13 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Draggable } from "./Draggable";
 import { ViewTarget } from "./ViewTarget";
-import { SvgGrid } from "./SvgGrid";
-import { ReanimatedDraggable } from "./ReanimatedDraggable";
-import { SvgTarget } from "./SvgTarget";
+import { ViewGrid } from "./ViewGrid";
 
 const App = () => {
   return (
     <View style={styles.container}>
-      <SvgGrid />
-      <SvgTarget />
-      {/* <ViewTarget /> */}
-      {/* <ReanimatedDraggable /> */}
+      <ViewTarget />
+      <ViewGrid />
       <Draggable />
     </View>
   );

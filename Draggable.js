@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   dot: {
-    backgroundColor: "green",
+    backgroundColor: "black",
     width: CIRCLE_SIZE,
     height: CIRCLE_SIZE,
     borderRadius: CIRCLE_SIZE / 2,
