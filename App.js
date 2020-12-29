@@ -1,14 +1,14 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Draggable } from "./Draggable";
-import { ViewTarget } from "./ViewTarget";
-import { ViewGrid } from "./ViewGrid";
+import { Target } from "./Target";
+import { Grid } from "./Grid";
 
 const App = () => {
   return (
     <View style={styles.container}>
-      <ViewTarget />
-      <ViewGrid />
+      <Target />
+      <Grid />
       <Draggable />
     </View>
   );

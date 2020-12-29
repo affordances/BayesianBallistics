@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 
 import { TARGET_SIDE } from "./constants";
 
-export const ViewGrid = () => {
+export const Grid = () => {
   const grid = Array(10)
     .fill(null)
     .map((_) => Array(10).fill(null));

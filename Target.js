@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 
 import { BASE_TARGET_COLOR, TARGET_SIDE } from "./constants";
 
-export const ViewTarget = () => {
+export const Target = () => {
   return (
     <View style={styles.container}>
       <View
@@ -56,8 +56,6 @@ export const ViewTarget = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // borderWidth: 1,
-    // borderColor: "black",
     position: "absolute",
     zIndex: 1,
   },

@@ -14,8 +14,9 @@ export const Draggable = () => {
       });
       pan.setValue({ x: 0, y: 0 });
     },
-    onPanResponderMove: (_, gesture) =>
-      pan.setValue({ x: gesture.dx, y: gesture.dy }),
+    onPanResponderMove: (_, gesture) => {
+      return pan.setValue({ x: gesture.dx, y: gesture.dy });
+    },
     onPanResponderRelease: () => {
       pan.flattenOffset();
     },
