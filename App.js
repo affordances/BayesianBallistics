@@ -13,8 +13,6 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // borderColor: "black",
-    // borderWidth: 1,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",

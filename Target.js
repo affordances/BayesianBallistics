@@ -4,12 +4,17 @@ import { Draggable } from "./Draggable";
 import { Bullseye } from "./Bullseye";
 import { Grid } from "./Grid";
 
+import { TARGET_SIDE } from "./constants";
+
 export const Target = () => {
   const [targetDimensions, setTargetDimensions] = useState();
   return (
-    <View style={styles.container}>
+    <View
+      style={styles.container}
+      onLayout={(e) => setTargetDimensions(e.nativeEvent.layout)}
+    >
       <Bullseye />
-      <Grid setTargetDimensions={setTargetDimensions} />
+      <Grid />
       <Draggable targetDimensions={targetDimensions} />
     </View>
   );
@@ -17,7 +22,7 @@ export const Target = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: TARGET_SIDE,
     alignItems: "center",
     justifyContent: "center",
   },
