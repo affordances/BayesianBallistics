@@ -2,12 +2,13 @@ import React from "react";
 import { StyleSheet, PanResponder, Animated, View } from "react-native";
 import { CIRCLE_SIZE } from "./constants";
 
-const isWithinBounds = (layout, dragPosition) => {
+const isWithinBounds = (layout, event) => {
+  const { nativeEvent } = event;
   return (
-    dragPosition[0] > layout.x &&
-    dragPosition[0] < layout.x + layout.width &&
-    dragPosition[1] > layout.y &&
-    dragPosition[1] < layout.y + layout.height
+    nativeEvent.pageX > layout.x &&
+    nativeEvent.pageX < layout.x + layout.width &&
+    nativeEvent.pageY > layout.y &&
+    nativeEvent.pageY < layout.y + layout.height
   );
 };
 
@@ -26,10 +27,7 @@ export const Draggable = (props) => {
       pan.setValue({ x: 0, y: 0 });
     },
     onPanResponderMove: (e, gesture) => {
-      return isWithinBounds(targetDimensions, [
-        e.nativeEvent.pageX,
-        e.nativeEvent.pageY,
-      ])
+      return isWithinBounds(targetDimensions, e)
         ? pan.setValue({ x: gesture.dx, y: gesture.dy })
         : null;
     },
