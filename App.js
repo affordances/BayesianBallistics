@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Draggable } from "./Draggable";
 import { Target } from "./Target";
 import { Grid } from "./Grid";
 
 const App = () => {
+  const [targetDimensions, setTargetDimensions] = useState();
   return (
     <View style={styles.container}>
       <Target />
-      <Grid />
-      <Draggable />
+      <Grid setTargetDimensions={setTargetDimensions} />
+      <Draggable targetDimensions={targetDimensions} />
     </View>
   );
 };
