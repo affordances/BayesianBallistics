@@ -2,10 +2,14 @@ import React from "react";
 import { Button, StyleSheet, View } from "react-native";
 import { Target } from "./Target";
 
+import { useShots } from "./hooks";
+
 const App = () => {
+  const useShotsProps = useShots();
+
   return (
     <View style={styles.container}>
-      <Target />
+      <Target {...useShotsProps} />
       <Button title="Next" />
     </View>
   );

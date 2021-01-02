@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { StyleSheet, PanResponder, Animated, View } from "react-native";
 import { CIRCLE_SIZE } from "./constants";
 
@@ -13,28 +13,30 @@ const isWithinBounds = (layout, event) => {
 };
 
 export const Draggable = (props) => {
-  const { targetDimensions } = props;
+  const pan = useRef(new Animated.ValueXY(0, 0)).current;
 
-  const pan = new Animated.ValueXY();
-
-  const panResponder = PanResponder.create({
-    onStartShouldSetPanResponder: () => true,
-    onPanResponderGrant: () => {
-      pan.setOffset({
-        x: pan.x._value,
-        y: pan.y._value,
-      });
-      pan.setValue({ x: 0, y: 0 });
-    },
-    onPanResponderMove: (e, gesture) => {
-      return isWithinBounds(targetDimensions, e)
-        ? pan.setValue({ x: gesture.dx, y: gesture.dy })
-        : null;
-    },
-    onPanResponderRelease: () => {
-      pan.flattenOffset();
-    },
-  });
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => false,
+      onMoveShouldSetPanResponder: () => true,
+      onPanResponderGrant: () => {
+        pan.setOffset({
+          x: pan.x._value,
+          y: pan.y._value,
+        });
+        pan.setValue({ x: 0, y: 0 });
+      },
+      onPanResponderMove: (e, gesture) => {
+        return props.targetDimensions &&
+          isWithinBounds(props.targetDimensions, e)
+          ? pan.setValue({ x: gesture.dx, y: gesture.dy })
+          : null;
+      },
+      onPanResponderRelease: () => {
+        pan.flattenOffset();
+      },
+    })
+  ).current;
 
   return (
     <View style={styles.container}>
