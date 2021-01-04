@@ -8,6 +8,8 @@ export const useShots = () => {
   const [savedShots, setSavedShots] = useState([]);
   const [targetDimensions, setTargetDimensions] = useState(null);
 
+  console.log("mostRecentUnsavedShotPosition", mostRecentUnsavedShotPosition);
+
   return {
     mostRecentUnsavedShotPosition,
     setMostRecentUnsavedShotPosition,

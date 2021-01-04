@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { StyleSheet, PanResponder, Animated, View } from "react-native";
 import { CIRCLE_SIZE } from "./constants";
 
@@ -13,30 +13,41 @@ const isWithinBounds = (layout, event) => {
 };
 
 export const Draggable = (props) => {
-  const pan = useRef(new Animated.ValueXY(0, 0)).current;
+  const pan = React.useRef(new Animated.ValueXY()).current;
 
-  const panResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => false,
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderGrant: () => {
-        pan.setOffset({
-          x: pan.x._value,
-          y: pan.y._value,
-        });
-        pan.setValue({ x: 0, y: 0 });
-      },
-      onPanResponderMove: (e, gesture) => {
-        return props.targetDimensions &&
-          isWithinBounds(props.targetDimensions, e)
-          ? pan.setValue({ x: gesture.dx, y: gesture.dy })
-          : null;
-      },
-      onPanResponderRelease: () => {
-        pan.flattenOffset();
-      },
-    })
-  ).current;
+  const panResponder = React.useMemo(
+    () =>
+      PanResponder.create({
+        onStartShouldSetPanResponder: () => false,
+        onMoveShouldSetPanResponder: () => true,
+        onPanResponderGrant: () => {
+          pan.setOffset({
+            x: pan.x._value,
+            y: pan.y._value,
+          });
+          pan.setValue({ x: 0, y: 0 });
+        },
+        onPanResponderMove: (e, gesture) => {
+          return isWithinBounds(props.targetDimensions, e)
+            ? pan.setValue({ x: gesture.dx, y: gesture.dy })
+            : null;
+        },
+        onPanResponderRelease: () => {
+          pan.flattenOffset();
+        },
+      }),
+    [props.targetDimensions]
+  );
+
+  React.useEffect(() => {
+    pan.addListener((value) => {
+      props.setMostRecentUnsavedShotPosition(value);
+    });
+
+    return () => {
+      pan.removeAllListeners();
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
