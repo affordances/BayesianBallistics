@@ -10,7 +10,7 @@ const App = () => {
   return (
     <View style={styles.container}>
       <Target {...useShotsProps} />
-      <Button title="Next" />
+      <Button title="Next" onPress={() => useShotsProps.onSaveShot()} />
     </View>
   );
 };

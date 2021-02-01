@@ -1,66 +1,20 @@
 import React from "react";
-import { StyleSheet, PanResponder, Animated, View } from "react-native";
+import { StyleSheet, Animated, View } from "react-native";
 import { CIRCLE_SIZE } from "./constants";
 
-const isWithinBounds = (layout, event) => {
-  const { nativeEvent } = event;
-  return (
-    nativeEvent.pageX > layout.x &&
-    nativeEvent.pageX < layout.x + layout.width &&
-    nativeEvent.pageY > layout.y &&
-    nativeEvent.pageY < layout.y + layout.height
-  );
-};
-
 export const Draggable = (props) => {
-  const pan = React.useRef(new Animated.ValueXY()).current;
-
-  const panResponder = React.useMemo(
-    () =>
-      PanResponder.create({
-        onStartShouldSetPanResponder: () => false,
-        onMoveShouldSetPanResponder: () => true,
-        onPanResponderGrant: () => {
-          pan.setOffset({
-            x: pan.x._value,
-            y: pan.y._value,
-          });
-          pan.setValue({ x: 0, y: 0 });
-        },
-        onPanResponderMove: (e, gesture) => {
-          return isWithinBounds(props.targetDimensions, e)
-            ? pan.setValue({ x: gesture.dx, y: gesture.dy })
-            : null;
-        },
-        onPanResponderRelease: () => {
-          pan.flattenOffset();
-        },
-      }),
-    [props.targetDimensions]
-  );
-
-  React.useEffect(() => {
-    pan.addListener((value) => {
-      props.setMostRecentUnsavedShotPosition(value);
-    });
-
-    return () => {
-      pan.removeAllListeners();
-    };
-  }, []);
-
   return (
-    <View style={styles.container}>
+    <View style={styles.dotContainer}>
       <Animated.View
-        {...panResponder.panHandlers}
-        style={[pan.getLayout(), styles.dot]}
+        {...props.panResponder.panHandlers}
+        style={[props.pan.getLayout(), styles.dot]}
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  dotContainer: {
     zIndex: 2,
     position: "absolute",
   },
